@@ -69,10 +69,8 @@ public class LevelBuilder : MonoBehaviour
                 for (int i = 0; i < t; i++)
                 {
                     MoveEnemyInPool(ref enemiesPool);
-                    Debug.Log(i + "replaceEnemy");
                 }
             }
-            Debug.Log("enemies in pool " + enemiesPool.Count);
         }
 
         foreach (var enemy in enemiesPool)
@@ -96,7 +94,6 @@ public class LevelBuilder : MonoBehaviour
     {
         GameObject[] parts = Resources.LoadAll<GameObject>(path);
         list = parts.ToList();
-        Debug.Log("levelBuilderDownload");
     }
 
     private void LoadPlayer()
@@ -122,7 +119,6 @@ public class LevelBuilder : MonoBehaviour
             else
             {
                 int distance = randomNumber.Next(40, 100);
-                Debug.Log(distance + "Spawn distance");
                 GameObject newEnemy = Instantiate(enemy, _enemiesContainer);
                 newEnemy.gameObject.SetActive(false);
                 newEnemy.transform.position =
@@ -164,11 +160,7 @@ public class LevelBuilder : MonoBehaviour
         foreach (Transform child in _enemiesContainer)
         {
             child.gameObject.SetActive(false);
-            //GameObject.Destroy(child.gameObject);
         }
-
-        //enemiesPool.Clear();
-
     }
 
     private void LoadWall()

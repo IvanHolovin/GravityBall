@@ -18,7 +18,6 @@ public class LevelScript : MonoBehaviour
         {
             if (child.gameObject.GetComponent<MeshRenderer>() != null)
                 childrenMesh.Add(child.gameObject.GetComponent<MeshRenderer>());
-           
         }
         ChangeColor();
     }

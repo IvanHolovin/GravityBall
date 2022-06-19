@@ -11,7 +11,6 @@ public class EnemyCube : MonoBehaviour
     void OnEnable()
     {
         CheckYLocationAndStartLoop();
-        Debug.Log("OnEnableEnemy");
     }
 
     private void OnDestroy()

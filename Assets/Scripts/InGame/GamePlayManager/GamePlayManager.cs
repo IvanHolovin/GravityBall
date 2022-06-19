@@ -95,7 +95,6 @@ public class GamePlayManager : MonoBehaviour
         if (Advertisement.IsReady())
         {
             Advertisement.Show("video");
-            Debug.Log("ADWATCHED");
         }
     }
 
@@ -134,6 +133,4 @@ public class GamePlayManager : MonoBehaviour
     {
         PlayerData.ADAwailable = false;
     }
-    
-    
 }
