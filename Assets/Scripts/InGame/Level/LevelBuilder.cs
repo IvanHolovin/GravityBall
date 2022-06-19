@@ -172,7 +172,6 @@ public class LevelBuilder : MonoBehaviour
     private void InstantiateWall()
     {
        GameObject wallFollow = Instantiate(wall, _wallContainer);
-       Debug.Log(wallFollow);
        wallFollow.transform.position = Const.WallStartPosition;
        target = wallFollow;
     }
