@@ -785,7 +785,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6120b63c4c7b64ce1a5fa240170bdea3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelPartStart: {fileID: 2122642479}
+  _levelPartStart: {fileID: 2122642479}
   _worldLevelPartContainer: {fileID: 1949441272}
   _enemiesContainer: {fileID: 2039569151}
   _wallContainer: {fileID: 320368985}
@@ -921,9 +921,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f530a30f4453e48bdb24c479784df08b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  resumeButton: {fileID: 1222765232}
-  menuButton: {fileID: 2086687216}
-  restartButton: {fileID: 826127275}
+  _resumeButton: {fileID: 1222765232}
+  _menuButton: {fileID: 2086687216}
+  _restartButton: {fileID: 826127275}
 --- !u!1 &651393224
 GameObject:
   m_ObjectHideFlags: 0
@@ -1246,11 +1246,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd2bde5d6a09444d9960314720c937c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  backPopUp: {fileID: 599934018}
-  gameOverPopUp: {fileID: 1480707385}
-  backButton: {fileID: 1456887512}
-  loadingScreen: {fileID: 384850678}
-  slider: {fileID: 740782368}
+  _backPopUp: {fileID: 599934018}
+  _gameOverPopUp: {fileID: 1480707385}
+  _backButton: {fileID: 1456887512}
+  _loadingScreen: {fileID: 384850678}
+  _loadingSlider: {fileID: 740782368}
 --- !u!4 &754812823
 Transform:
   m_ObjectHideFlags: 0
@@ -2089,8 +2089,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea1382474a78f4adba56146ea671f2f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scoreSpeed: 5
-  scoreText: {fileID: 864312330}
+  _scoreSpeed: 5
+  _scoreText: {fileID: 864312330}
 --- !u!1 &1219245882
 GameObject:
   m_ObjectHideFlags: 0
@@ -2304,7 +2304,7 @@ GameObject:
   - component: {fileID: 1456887513}
   - component: {fileID: 1456887512}
   m_Layer: 5
-  m_Name: Back
+  m_Name: BackButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2441,9 +2441,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f9f925fa4493490998daf1f472cf725, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WatchADButton: {fileID: 1529356839}
-  menuButton: {fileID: 1125533444}
-  restartButton: {fileID: 404542795}
+  _watchAdButton: {fileID: 1529356839}
+  _menuButton: {fileID: 1125533444}
+  _restartButton: {fileID: 404542795}
 --- !u!224 &1480707387
 RectTransform:
   m_ObjectHideFlags: 0

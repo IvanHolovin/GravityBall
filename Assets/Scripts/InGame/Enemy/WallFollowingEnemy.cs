@@ -1,11 +1,9 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class WallFollowingEnemy : MonoBehaviour
 {
-    [SerializeField] private KillType killType;
+    [SerializeField] 
+    private KillType _killType;
 
     private void Awake()
     {
@@ -18,15 +16,15 @@ public class WallFollowingEnemy : MonoBehaviour
 
     void FixedUpdate()
     {
-        transform.Translate(new Vector3(1,0,0) * Const.Speed * Time.deltaTime);
+        transform.Translate(new Vector3(1,0,0) * Const.SPEED * Time.deltaTime);
     }
 
     private void OnTriggerEnter(Collider collision)
     {
         var player = collision.gameObject.GetComponent<PlayerController>();
-        if (player != null && player.CheckOnKill(killType))
+        if (player != null && player.CheckOnKill(_killType))
         {
-            DeathDispatcher.Instance.ActionWasLoaded(killType);
+            DeathDispatcher.Instance.ActionWasLoaded(_killType);
         }
     }
     

@@ -1,15 +1,13 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Gravity : MonoBehaviour
 {
     public static event Action GravityStateChange;
-    private static bool gravityState = true;
+    private static bool _gravityState = true;
     public static bool GravityState
     {
-        get { return gravityState; }
+        get { return _gravityState; }
     }
 
     private void Awake()
@@ -20,7 +18,7 @@ public class Gravity : MonoBehaviour
     public void ChangeGravity()
     {
         Physics.gravity *= -1;
-        gravityState = !gravityState;
+        _gravityState = !_gravityState;
         GravityStateChange?.Invoke();
     }
 
@@ -29,7 +27,7 @@ public class Gravity : MonoBehaviour
         if (Physics.gravity.y > 0)
         {
             Physics.gravity *= -1;
-            gravityState = !gravityState;
+            _gravityState = !_gravityState;
             GravityStateChange?.Invoke();
         }
         

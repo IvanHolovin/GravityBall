@@ -1,33 +1,29 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using DG.Tweening;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    private GameObject chasingWall;
-    private Rigidbody rb;
+    private GameObject _chasingWall;
+    private Rigidbody _playerRigidbody;
     private Material _material;
-    private ChangeColorScript color;
-    private Vector3 startDistance;
-    private Vector3 startPosition;
-    private float currentSpeed = Const.Speed;
-    private bool checkPlayState = true;
+    private ChangeColorScript _color;
+    private Vector3 _startDistance;
+    private Vector3 _startPosition;
+    private float _currentSpeed = Const.SPEED;
+    private bool _checkPlayState = true;
     
 
     private void Start()
     {
-        ScoreManager.scoreReached += AddSpeed;
+        ScoreManager.ScoreReached += AddSpeed;
         Gravity.GravityStateChange += ChangeColor;
         GameStateDispatcher.Instance.AddListener(CheckOnRestart);
         GameStateDispatcher.Instance.AddListener(CheckOnPlay);
         
-        startPosition = Const.PlayerStartPosition;
-        startDistance = transform.position - chasingWall.transform.position;
-        rb = GetComponent<Rigidbody>();
+        _startPosition = Const.PlayerStartPosition;
+        _startDistance = transform.position - _chasingWall.transform.position;
+        _playerRigidbody = GetComponent<Rigidbody>();
         _material = GetComponent<MeshRenderer>().material;
-        color = GetComponent<ChangeColorScript>();
+        _color = GetComponent<ChangeColorScript>();
         ChangeColor();
     }
 
@@ -38,7 +34,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnDestroy()
     {
-        ScoreManager.scoreReached -= AddSpeed;
+        ScoreManager.ScoreReached -= AddSpeed;
         Gravity.GravityStateChange -= ChangeColor;
         GameStateDispatcher.Instance.RemoveListener(CheckOnRestart);
         GameStateDispatcher.Instance.RemoveListener(CheckOnPlay);
@@ -49,14 +45,14 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
         {
-            if (checkPlayState)
+            if (_checkPlayState)
             {
-                if ((transform.position.x - chasingWall.transform.position.x) > startDistance.x)
+                if ((transform.position.x - _chasingWall.transform.position.x) > _startDistance.x)
                 {
-                    currentSpeed = Const.Speed;
+                    _currentSpeed = Const.SPEED;
                 }
 
-                rb.transform.Translate(new Vector3(1, 0, 0) * currentSpeed * Time.deltaTime);
+                _playerRigidbody.transform.Translate(new Vector3(1, 0, 0) * _currentSpeed * Time.deltaTime);
                 if (transform.position.y > 6f || transform.position.y < -4)
                 {
                     DeathDispatcher.Instance.ActionWasLoaded(KillType.Out);
@@ -68,11 +64,11 @@ public class PlayerController : MonoBehaviour
     {
         if (Gravity.GravityState)
         {
-            color.SetColorWhite(_material); 
+            _color.SetColorWhite(_material); 
         }
         else
         {
-            color.SetColorBlack(_material);
+            _color.SetColorBlack(_material);
         }
     }
 
@@ -84,11 +80,11 @@ public class PlayerController : MonoBehaviour
     {
         if (gameState == GameState.Play)
         {
-            checkPlayState = true;
+            _checkPlayState = true;
         }
         else
         {
-            checkPlayState = false;
+            _checkPlayState = false;
         }
         
     }
@@ -96,21 +92,21 @@ public class PlayerController : MonoBehaviour
     {
         if (gameState == GameState.Restart)
         {
-            transform.position = startPosition;
+            transform.position = _startPosition;
         }
         else if (gameState == GameState.WatchAD)
         {
-            transform.position = startDistance + chasingWall.transform.position;
+            transform.position = _startDistance + _chasingWall.transform.position;
         }
     }
     
     private void AddSpeed()
     {
-        currentSpeed = Const.Speed + 1f;
+        _currentSpeed = Const.SPEED + 1f;
     }
 
     public void SetFollowingWall(GameObject followingWallGameObject)
     {
-        chasingWall = followingWallGameObject;
+        _chasingWall = followingWallGameObject;
     }
 }

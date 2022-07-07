@@ -8,20 +8,27 @@ using UnityEngine.UI;
 
 public class MainMenuSceneManager : MonoBehaviour
 {
-    [SerializeField] private Text scoreText;
-    [SerializeField] private Button playButton;
-    [SerializeField] private GameObject loadingScreen;
-    [SerializeField] private Slider slider;
+    [SerializeField] 
+    private Text _scoreText;
+    
+    [SerializeField] 
+    private Button _playButton;
+    
+    [SerializeField] 
+    private GameObject _loadingScreen;
+    
+    [SerializeField] 
+    private Slider _loadingSlider;
 
     private void Awake()
     {
-        playButton?.onClick.AddListener(()=> PlayButton());
+        _playButton?.onClick.AddListener(()=> PlayButton());
         PlayerData.Instance.LoadBestScore();
     }
 
     void Start()
     {
-        scoreText.text = "" + Mathf.RoundToInt(PlayerData.bestScore);
+        _scoreText.text = "" + Mathf.RoundToInt(PlayerData.bestScore);
     }
 
     // Update is called once per frame
@@ -38,12 +45,12 @@ public class MainMenuSceneManager : MonoBehaviour
     {
         AsyncOperation operation = SceneManager.LoadSceneAsync((int)sceneIndex);
         
-        loadingScreen.SetActive(true);
+        _loadingScreen.SetActive(true);
         
         while (!operation.isDone)
         {
             float progress = Mathf.Clamp01(operation.progress / 0.9f);
-            slider.value = progress;
+            _loadingSlider.value = progress;
             yield return null;
         }
     }

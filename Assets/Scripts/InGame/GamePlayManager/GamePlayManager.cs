@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Advertisements;
 
@@ -15,16 +13,16 @@ public enum GameState
 }
 public class GamePlayManager : MonoBehaviour
 {
-    private Gravity gr;
-    private GameState gameState;
-    private KillType lastDeathKillType;
+    private Gravity _gravity;
+    private GameState _gameState;
+    private KillType _lastDeathKillType;
 
     public static GamePlayManager Instance;
 
     private void Awake()
     {
         Instance = this;
-        gr = GetComponent<Gravity>();
+        _gravity = GetComponent<Gravity>();
         DeathDispatcher.Instance.AddListener(WinLoseGameDefinition);
         GameStateChanger(GameState.Play);
         if (Advertisement.isSupported)
@@ -36,9 +34,9 @@ public class GamePlayManager : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && gameState == GameState.Play)
+        if ((Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0)) && _gameState == GameState.Play)
         {
-            gr.ChangeGravity();
+            _gravity.ChangeGravity();
         }
     }
 
@@ -49,7 +47,7 @@ public class GamePlayManager : MonoBehaviour
 
     public void GameStateChanger(GameState gameState)
     {
-        this.gameState = gameState;
+        this._gameState = gameState;
         
         switch (gameState)
         {
@@ -61,7 +59,7 @@ public class GamePlayManager : MonoBehaviour
                 GameOnPause();
                 break;
             case GameState.Restart:
-                gr.RestartGravity();
+                _gravity.RestartGravity();
                 GameOnResume();
                 WatchADReset();
                 GameStateDispatcher.Instance.ActionWasLoaded(GameState.Restart);
@@ -72,8 +70,8 @@ public class GamePlayManager : MonoBehaviour
                 PlayerData.Instance.SaveBestScore();
                 break;
             case GameState.WatchAD:
-                if (lastDeathKillType == KillType.Out) 
-                                        gr.ChangeGravity();
+                if (_lastDeathKillType == KillType.Out) 
+                                        _gravity.ChangeGravity();
                 WatchAD();
                 GameStateDispatcher.Instance.ActionWasLoaded(GameState.WatchAD);
                 GameStateChanger(GameState.Pause);
@@ -86,7 +84,7 @@ public class GamePlayManager : MonoBehaviour
                 throw new ArgumentOutOfRangeException(nameof(gameState), gameState, null);
         }
         
-        GameStateDispatcher.Instance.ActionWasLoaded(this.gameState);
+        GameStateDispatcher.Instance.ActionWasLoaded(this._gameState);
     }
 
     private void WatchAD()
@@ -102,16 +100,11 @@ public class GamePlayManager : MonoBehaviour
     {
         if (killType == KillType.Out || killType == KillType.Wall || killType == KillType.Enemy)
         { 
-            lastDeathKillType = killType;
+            _lastDeathKillType = killType;
             GameStateChanger(GameState.Death);
            
         }
         
-    }
-
-    private void OnRestart()
-    {
-        GameStateChanger(GameState.Play);
     }
     
     private void GameOnPause()
@@ -126,11 +119,11 @@ public class GamePlayManager : MonoBehaviour
 
     private void WatchADReset()
     {
-        PlayerData.ADAwailable = true;
+        PlayerData.AdAwailable = true;
     }
 
     private void ADWatched()
     {
-        PlayerData.ADAwailable = false;
+        PlayerData.AdAwailable = false;
     }
 }

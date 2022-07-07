@@ -1,29 +1,26 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BackgroundFollow : MonoBehaviour
 {
-    private Transform target;
+    private Transform _targetWall;
     private Material _material;
-    private ChangeColorScript color;
+    private ChangeColorScript _color;
 
     private void Awake()
     {
         _material = GetComponent<MeshRenderer>().material;
-        color = GetComponent<ChangeColorScript>();
+        _color = GetComponent<ChangeColorScript>();
         ChangeColor();
     }
 
     private void Start()
     {
-        target = FindObjectOfType<WallFollowingEnemy>().transform;
+        _targetWall = FindObjectOfType<WallFollowingEnemy>().transform;
     }
 
     void Update()
         {
-            transform.position = new Vector3(target.transform.position.x, 0f,
+            transform.position = new Vector3(_targetWall.transform.position.x, 0f,
                 10f);
         }
 
@@ -41,11 +38,11 @@ public class BackgroundFollow : MonoBehaviour
         {
             if (Gravity.GravityState)
             {
-                color.SetColorBlack(_material);
+                _color.SetColorBlack(_material);
             }
             else
             {
-                color.SetColorWhite(_material);
+                _color.SetColorWhite(_material);
             }
         }
     }

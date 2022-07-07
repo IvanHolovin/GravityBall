@@ -1,38 +1,40 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using UnityEngine;
-using UnityEngine.Serialization;
-using Object = UnityEngine.Object;
 using Random = System.Random;
 
 public class LevelBuilder : MonoBehaviour
 {
-    private GameObject target;
-    [SerializeField] private GameObject levelPartStart;
-    [SerializeField] private Transform _worldLevelPartContainer;
-    [SerializeField] private Transform _enemiesContainer;
-    [SerializeField] private Transform _wallContainer;
-    [SerializeField] private Transform _playerContainer;
-    private List<GameObject> levelPartsToBuild = new List<GameObject>();
-    private List<GameObject> levelPool = new List<GameObject>();
-    private List<GameObject> enemiesToBuild = new List<GameObject>();
-    private List<GameObject> enemiesPool = new List<GameObject>();
-    private Random randomNumber;
-    private GameObject playerLoaded;
-    private GameObject wall;
-    private GameObject player;
+    [SerializeField] 
+    private GameObject _levelPartStart;
+    [SerializeField] 
+    private Transform _worldLevelPartContainer;
+    [SerializeField] 
+    private Transform _enemiesContainer;
+    [SerializeField] 
+    private Transform _wallContainer;
+    [SerializeField] 
+    private Transform _playerContainer;
+
+    private List<GameObject> _levelPartsToBuild = new List<GameObject>();
+    private List<GameObject> _levelPool = new List<GameObject>();
+    private List<GameObject> _enemiesToBuild = new List<GameObject>();
+    private List<GameObject> _enemiesPool = new List<GameObject>();
+    
+    private Random _randomNumber;
+    private GameObject _playerLoaded;
+    private GameObject _wall;
+    private GameObject _player;
+    private GameObject _targetWall;
 
 
     private void Awake()
     {
-        LoadResourcesParts(Const.LevelPartsPath, out levelPartsToBuild);
-        LoadResourcesParts(Const.EnemiesPath, out enemiesToBuild);
+        LoadResourcesParts(Const.LEVEL_PARTS_PATH, out _levelPartsToBuild);
+        LoadResourcesParts(Const.ENEMIES_PATH, out _enemiesToBuild);
         LoadPlayer();
         LoadWall();
-        randomNumber = new Random();
+        _randomNumber = new Random();
         GameStateDispatcher.Instance.AddListener(RestartLevel);
     }
 
@@ -40,42 +42,42 @@ public class LevelBuilder : MonoBehaviour
     {
         InstantiateWall();
         InstantiatePlayer();
-        levelPool.Add(levelPartStart);
-        player.GetComponent<PlayerController>().SetFollowingWall(target);
+        _levelPool.Add(_levelPartStart);
+        _player.GetComponent<PlayerController>().SetFollowingWall(_targetWall);
     }
 
     private void Update()
     {
 
-        if (target.gameObject.transform.position.x >
-            levelPool[levelPool.Count - 1].GetComponentInChildren<LevelScript>().endPoint.position.x - 40f)
+        if (_targetWall.gameObject.transform.position.x >
+            _levelPool[_levelPool.Count - 1].GetComponentInChildren<LevelScript>().endPoint.position.x - 40f)
         {
-            if (levelPool.Count < Const.LevelPoolSize)
+            if (_levelPool.Count < Const.LEVEL_POOL_SIZE)
             {
-                SpawnPart(levelPartsToBuild[randomNumber.Next(0, levelPartsToBuild.Count - 1)],
-                    enemiesToBuild[randomNumber.Next(0, enemiesToBuild.Count - 1)]);
+                SpawnPart(_levelPartsToBuild[_randomNumber.Next(0, _levelPartsToBuild.Count - 1)],
+                    _enemiesToBuild[_randomNumber.Next(0, _enemiesToBuild.Count - 1)]);
             }
             else
             {
-                int rd_num = new Random().Next(0, Const.LevelPoolSize - 2);
-                GameObject replacedPart = levelPool[rd_num];
-                levelPool.Remove(levelPool[rd_num]);
+                int rd_num = new Random().Next(0, Const.LEVEL_POOL_SIZE - 2);
+                GameObject replacedPart = _levelPool[rd_num];
+                _levelPool.Remove(_levelPool[rd_num]);
                 replacedPart.transform.position =
-                    levelPool[levelPool.Count - 1].GetComponentInChildren<LevelScript>().endPoint.position -
+                    _levelPool[_levelPool.Count - 1].GetComponentInChildren<LevelScript>().endPoint.position -
                     replacedPart.GetComponentInChildren<LevelScript>().startPoint.localPosition;
-                levelPool.Add(replacedPart);
+                _levelPool.Add(replacedPart);
 
-                int t = randomNumber.Next(1, 3);
+                int t = _randomNumber.Next(1, 3);
                 for (int i = 0; i < t; i++)
                 {
-                    MoveEnemyInPool(ref enemiesPool);
+                    MoveEnemyInPool(ref _enemiesPool);
                 }
             }
         }
 
-        foreach (var enemy in enemiesPool)
+        foreach (var enemy in _enemiesPool)
         {
-            if (target.transform.position.x > enemy.transform.position.x)
+            if (_targetWall.transform.position.x > enemy.transform.position.x)
             {
                 enemy.gameObject.SetActive(false);
             }
@@ -99,48 +101,47 @@ public class LevelBuilder : MonoBehaviour
     private void LoadPlayer()
     {
         GameObject player = Resources.Load<GameObject>("Player/Player");
-        playerLoaded = player;
+        _playerLoaded = player;
     }
 
     private void SpawnPart(GameObject levelPart, GameObject enemy)
     {
         GameObject newLevelPart = Instantiate(levelPart, _worldLevelPartContainer);
         newLevelPart.transform.position =
-            levelPool[levelPool.Count - 1].GetComponentInChildren<LevelScript>().endPoint.position -
+            _levelPool[_levelPool.Count - 1].GetComponentInChildren<LevelScript>().endPoint.position -
             newLevelPart.GetComponentInChildren<LevelScript>().startPoint.localPosition;
 
-        int t = randomNumber.Next(0, 3);
+        int t = _randomNumber.Next(0, 3);
         for (int i = 0; i < t; i++)
         {
-            if (enemiesPool.Count > Const.EnemiesPoolSize)
+            if (_enemiesPool.Count > Const.ENEMIES_POOL_SIZE)
             {
-                MoveEnemyInPool(ref enemiesPool);
+                MoveEnemyInPool(ref _enemiesPool);
             }
             else
             {
-                int distance = randomNumber.Next(40, 100);
+                int distance = _randomNumber.Next(40, 100);
                 GameObject newEnemy = Instantiate(enemy, _enemiesContainer);
                 newEnemy.gameObject.SetActive(false);
                 newEnemy.transform.position =
-                    new Vector3(target.transform.position.x + distance, randomNumber.Next(-3, 4), 0);
+                    new Vector3(_targetWall.transform.position.x + distance, _randomNumber.Next(-3, 4), 0);
                         newEnemy.gameObject.SetActive(true);
-                enemiesPool.Add(newEnemy);
+                _enemiesPool.Add(newEnemy);
             }
             
         }
 
-        levelPool.Add(newLevelPart);
+        _levelPool.Add(newLevelPart);
 
     }
 
     void MoveEnemyInPool(ref List<GameObject> list)
     {
-        int distance = randomNumber.Next(40, 100);
-        Debug.Log(distance + "replace distance");
+        int distance = _randomNumber.Next(40, 100);
         GameObject replacedEnemy = list[1];
         list.Remove(list[1]);
         replacedEnemy.transform.position =
-            new Vector3(target.transform.position.x + distance, randomNumber.Next(-3, 4), 0);
+            new Vector3(_targetWall.transform.position.x + distance, _randomNumber.Next(-3, 4), 0);
         replacedEnemy.gameObject.SetActive(true);
         list.Add(replacedEnemy);
     }
@@ -154,8 +155,8 @@ public class LevelBuilder : MonoBehaviour
             GameObject.Destroy(levelParts.gameObject);
         }
 
-        levelPool.Clear();
-        levelPool.Add(levelPartStart);
+        _levelPool.Clear();
+        _levelPool.Add(_levelPartStart);
 
         foreach (Transform child in _enemiesContainer)
         {
@@ -166,21 +167,21 @@ public class LevelBuilder : MonoBehaviour
     private void LoadWall()
     {
         GameObject wall = Resources.Load<GameObject>("FollowingWall/FollowingEnemy");
-        this.wall = wall;
+        this._wall = wall;
     }
 
     private void InstantiateWall()
     {
-       GameObject wallFollow = Instantiate(wall, _wallContainer);
+       GameObject wallFollow = Instantiate(_wall, _wallContainer);
        wallFollow.transform.position = Const.WallStartPosition;
-       target = wallFollow;
+       _targetWall = wallFollow;
     }
 
     private void InstantiatePlayer()
     {
-        GameObject player = Instantiate(playerLoaded, _playerContainer);
+        GameObject player = Instantiate(_playerLoaded, _playerContainer);
         player.transform.position = Const.PlayerStartPosition;
-        this.player = player;
+        this._player = player;
     }
 
 

@@ -7,11 +7,20 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-    [SerializeField] private GameObject backPopUp;
-    [SerializeField] private GameObject gameOverPopUp;
-    [SerializeField] private Button backButton;
-    [SerializeField] private GameObject loadingScreen;
-    [SerializeField] private Slider slider;
+    [SerializeField] 
+    private GameObject _backPopUp;
+    
+    [SerializeField] 
+    private GameObject _gameOverPopUp;
+    
+    [SerializeField] 
+    private Button _backButton;
+    
+    [SerializeField] 
+    private GameObject _loadingScreen;
+    
+    [SerializeField] 
+    private Slider _loadingSlider;
 
 
     private void Awake()
@@ -21,7 +30,7 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
-        backButton?.onClick.AddListener(()=> GamePlayManager.Instance.GameStateChanger(GameState.Pause));
+        _backButton?.onClick.AddListener(()=> GamePlayManager.Instance.GameStateChanger(GameState.Pause));
     }
 
     private void OnDestroy()
@@ -32,8 +41,8 @@ public class UIManager : MonoBehaviour
     private void PopUpManagerController(GameState state)
     {
         
-        backPopUp.gameObject.SetActive(state == GameState.Pause); 
-        gameOverPopUp.SetActive(state == GameState.Death);
+        _backPopUp.gameObject.SetActive(state == GameState.Pause); 
+        _gameOverPopUp.SetActive(state == GameState.Death);
         if (state == GameState.MainMenu)
         {
             MenuButton();
@@ -49,12 +58,12 @@ public class UIManager : MonoBehaviour
     {
         AsyncOperation operation = SceneManager.LoadSceneAsync((int)sceneIndex);
         
-        loadingScreen.SetActive(true);
+        _loadingScreen.SetActive(true);
         
         while (!operation.isDone)
         {
             float progress = Mathf.Clamp01(operation.progress / 0.9f);
-            slider.value = progress;
+            _loadingSlider.value = progress;
             yield return null;
         }
     }

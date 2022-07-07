@@ -1,7 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 public class DispatcherSingletonTool<TClass, TValue> where TClass: DispatcherSingletonTool<TClass, TValue>, new()
 {
@@ -18,24 +15,24 @@ public class DispatcherSingletonTool<TClass, TValue> where TClass: DispatcherSin
     }
 
 
-    private Action<TValue> onActionTrigger;
+    private Action<TValue> _onActionTrigger;
 
     public void AddListener(Action<TValue> listener)
     {
-        onActionTrigger += listener;
+        _onActionTrigger += listener;
     }
 
     public void RemoveListener(Action<TValue> listener)
     {
-        if (onActionTrigger != null)
+        if (_onActionTrigger != null)
         {
-            onActionTrigger -= listener;
+            _onActionTrigger -= listener;
         }
     }
 
     public void ActionWasLoaded(TValue value)
     {
-        onActionTrigger?.Invoke(value);
+        _onActionTrigger?.Invoke(value);
     }
 
 }

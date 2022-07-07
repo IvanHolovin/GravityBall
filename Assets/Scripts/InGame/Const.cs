@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public enum KillType
@@ -17,11 +15,11 @@ public enum SceneID
 
 public class Const
 {
-    public const float Speed = 10f;
-    public const int LevelPoolSize = 25;
-    public const int EnemiesPoolSize = 20;
-    public const string LevelPartsPath = "LevelParts";
-    public const string EnemiesPath = "Enemy";
+    public const float SPEED = 10f;
+    public const int LEVEL_POOL_SIZE = 25;
+    public const int ENEMIES_POOL_SIZE = 20;
+    public const string LEVEL_PARTS_PATH = "LevelParts";
+    public const string ENEMIES_PATH = "Enemy";
     public static readonly Vector3 WallStartPosition = new Vector3(-4, 0, 0);
     public static readonly Vector3 PlayerStartPosition = new Vector3(6, 0, 0);
 }

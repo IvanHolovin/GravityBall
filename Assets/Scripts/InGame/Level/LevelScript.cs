@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,17 +6,17 @@ public class LevelScript : MonoBehaviour
     public Transform startPoint;
     public Transform endPoint;
     
-    private ChangeColorScript color;
-    private List<MeshRenderer> childrenMesh = new List<MeshRenderer>();
+    private ChangeColorScript _color;
+    private List<MeshRenderer> _childrenMesh = new List<MeshRenderer>();
     
 
     private void Awake()
     {
-        color = GetComponent<ChangeColorScript>();
+        _color = GetComponent<ChangeColorScript>();
         foreach (Transform child in transform)
         {
             if (child.gameObject.GetComponent<MeshRenderer>() != null)
-                childrenMesh.Add(child.gameObject.GetComponent<MeshRenderer>());
+                _childrenMesh.Add(child.gameObject.GetComponent<MeshRenderer>());
         }
         ChangeColor();
     }
@@ -36,16 +35,16 @@ public class LevelScript : MonoBehaviour
     {
         if (Gravity.GravityState)
         {
-            foreach (var part in childrenMesh)
+            foreach (var part in _childrenMesh)
             {
-                color.SetColorWhite(part.material);
+                _color.SetColorWhite(part.material);
             }
         }
         else
         {
-            foreach (var part in childrenMesh)
+            foreach (var part in _childrenMesh)
             {
-                color.SetColorBlack(part.material);
+                _color.SetColorBlack(part.material);
             }
         }
     }

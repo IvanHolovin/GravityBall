@@ -8,12 +8,12 @@ using UnityEngine.UI;
 
 public class ScoreText : MonoBehaviour
 {
-    private Text scoreText;
+    private Text _scoreText;
 
 
     private void Awake()
     {
-        scoreText = GetComponent<Text>();
+        _scoreText = GetComponent<Text>();
     }
     
     void OnEnable()
@@ -30,11 +30,11 @@ public class ScoreText : MonoBehaviour
     {
         if (Gravity.GravityState)
         {
-            scoreText.color = new Color32(0,0,0,255);
+            _scoreText.color = new Color32(0,0,0,255);
         }
         else
         {
-            scoreText.color = new Color32(255,255,255,255);
+            _scoreText.color = new Color32(255,255,255,255);
         }
     }
 }

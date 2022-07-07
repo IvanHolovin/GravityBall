@@ -6,12 +6,16 @@ using UnityEngine.UI;
 
 public class ScoreManager : MonoBehaviour
 {
-    [SerializeField] private float scoreSpeed;
-    [SerializeField] private Text scoreText;
-    private float currentScore;
-    private bool checker = true;
+    [SerializeField] 
+    private float _scoreSpeed;
+    
+    [SerializeField] 
+    private Text _scoreText;
+    
+    private float _currentScore;
+    private bool _checker = true;
 
-    public static event Action scoreReached;
+    public static event Action ScoreReached;
 
     void Awake()
     {
@@ -21,54 +25,54 @@ public class ScoreManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(checker)
+        if(_checker)
         {
-            currentScore += scoreSpeed * Time.deltaTime;
-            if (currentScore < 10)
+            _currentScore += _scoreSpeed * Time.deltaTime;
+            if (_currentScore < 10)
             {
-                scoreText.text = "SCORE 0000" + Mathf.RoundToInt(currentScore); 
+                _scoreText.text = "SCORE 0000" + Mathf.RoundToInt(_currentScore); 
             }
-            else if (10 < currentScore && currentScore < 100)
+            else if (10 < _currentScore && _currentScore < 100)
             {
-                scoreText.text = "SCORE 000" + Mathf.RoundToInt(currentScore);
+                _scoreText.text = "SCORE 000" + Mathf.RoundToInt(_currentScore);
             }
-            else if (100 < currentScore && currentScore < 1000)
+            else if (100 < _currentScore && _currentScore < 1000)
             {
-                scoreText.text = "SCORE 00" + Mathf.RoundToInt(currentScore);
+                _scoreText.text = "SCORE 00" + Mathf.RoundToInt(_currentScore);
             }
-            else if (1000 < currentScore && currentScore < 10000)
+            else if (1000 < _currentScore && _currentScore < 10000)
             {
-                scoreText.text = "SCORE 0" + Mathf.RoundToInt(currentScore);
+                _scoreText.text = "SCORE 0" + Mathf.RoundToInt(_currentScore);
             }
             else
             {
-                scoreText.text = "SCORE " + Mathf.RoundToInt(currentScore);
+                _scoreText.text = "SCORE " + Mathf.RoundToInt(_currentScore);
             }
         }
 
-        if (currentScore > PlayerData.bestScore)
+        if (_currentScore > PlayerData.bestScore)
         {
-            PlayerData.bestScore = currentScore;
+            PlayerData.bestScore = _currentScore;
         }
 
-        if (Mathf.Round(currentScore) % 100 == 0)
+        if (Mathf.Round(_currentScore) % 100 == 0)
         {
-            scoreReached?.Invoke();
+            ScoreReached?.Invoke();
         }
     }
 
     private void CheckOnPlay(GameState gameState)
     {
         if (gameState == GameState.Play) 
-            checker = true;
+            _checker = true;
         else if (gameState == GameState.Restart)
         {
-            currentScore = 0;
-            checker = true;
+            _currentScore = 0;
+            _checker = true;
         }
         else
         {
-            checker = false;
+            _checker = false;
         }
     }
     

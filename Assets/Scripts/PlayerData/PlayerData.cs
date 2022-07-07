@@ -5,30 +5,30 @@ using UnityEngine;
 public class PlayerData 
 {
     public static float bestScore;
-    public static bool ADAwailable = true;
-    private const string BESTSCORE = "BESTSCORE";
-    private static PlayerData instance;
+    public static bool AdAwailable = true;
+    private const string BEST_SCORE = "BESTSCORE";
+    private static PlayerData _instance;
     public static PlayerData Instance
     {
         get
         {
-            if (instance == null)
+            if (_instance == null)
             {
-                instance = new PlayerData();
+                _instance = new PlayerData();
             }
 
-            return instance;
+            return _instance;
         }
     }
 
     public void LoadBestScore()
     {
-        bestScore = PlayerPrefs.GetFloat(BESTSCORE, 0f);
+        bestScore = PlayerPrefs.GetFloat(BEST_SCORE, 0f);
     }
 
     public void SaveBestScore()
     {
-        PlayerPrefs.SetFloat(BESTSCORE,bestScore);
+        PlayerPrefs.SetFloat(BEST_SCORE,bestScore);
     }
     
 }

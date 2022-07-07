@@ -6,14 +6,19 @@ using UnityEngine.UI;
 
 public class BackPopUpController : MonoBehaviour
 {
-    [SerializeField] private Button resumeButton;
-    [SerializeField] private Button menuButton;
-    [SerializeField] private Button restartButton;
+    [SerializeField] 
+    private Button _resumeButton;
+    
+    [SerializeField] 
+    private Button _menuButton;
+    
+    [SerializeField] 
+    private Button _restartButton;
     
     private void Awake()
     {
-        resumeButton?.onClick.AddListener(() => GamePlayManager.Instance.GameStateChanger(GameState.Play));
-        menuButton?.onClick.AddListener(() => GamePlayManager.Instance.GameStateChanger(GameState.MainMenu));
-        restartButton?.onClick.AddListener(() => GamePlayManager.Instance.GameStateChanger(GameState.Restart));
+        _resumeButton?.onClick.AddListener(() => GamePlayManager.Instance.GameStateChanger(GameState.Play));
+        _menuButton?.onClick.AddListener(() => GamePlayManager.Instance.GameStateChanger(GameState.MainMenu));
+        _restartButton?.onClick.AddListener(() => GamePlayManager.Instance.GameStateChanger(GameState.Restart));
     }
 }

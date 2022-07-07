@@ -1,13 +1,10 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 
 public class EnemyCube : MonoBehaviour
 {
-    [SerializeField] private KillType killType;
-    private float previosPositionX;
+    [SerializeField] private KillType _killType;
+    private float _previosPositionX;
     void OnEnable()
     {
         CheckYLocationAndStartLoop();
@@ -34,9 +31,9 @@ public class EnemyCube : MonoBehaviour
     private void OnTriggerEnter(Collider collision)
     {
         var player = collision.gameObject.GetComponent<PlayerController>();
-        if (player != null && player.CheckOnKill(killType))
+        if (player != null && player.CheckOnKill(_killType))
         {
-            DeathDispatcher.Instance.ActionWasLoaded(killType);
+            DeathDispatcher.Instance.ActionWasLoaded(_killType);
             transform.gameObject.SetActive(false);
         }
     }
