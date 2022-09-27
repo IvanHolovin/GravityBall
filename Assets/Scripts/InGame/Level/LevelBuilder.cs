@@ -5,16 +5,11 @@ using Random = System.Random;
 
 public class LevelBuilder : MonoBehaviour
 {
-    [SerializeField] 
-    private GameObject _levelPartStart;
-    [SerializeField] 
-    private Transform _worldLevelPartContainer;
-    [SerializeField] 
-    private Transform _enemiesContainer;
-    [SerializeField] 
-    private Transform _wallContainer;
-    [SerializeField] 
-    private Transform _playerContainer;
+    [SerializeField] private GameObject _levelPartStart; 
+    [SerializeField] private Transform _worldLevelPartContainer;
+    [SerializeField] private Transform _enemiesContainer;
+    [SerializeField] private Transform _wallContainer;
+    [SerializeField] private Transform _playerContainer;
 
     private List<GameObject> _levelPartsToBuild = new List<GameObject>();
     private List<GameObject> _levelPool = new List<GameObject>();
@@ -26,8 +21,7 @@ public class LevelBuilder : MonoBehaviour
     private GameObject _wall;
     private GameObject _player;
     private GameObject _targetWall;
-
-
+    
     private void Awake()
     {
         LoadResourcesParts(Const.LEVEL_PARTS_PATH, out _levelPartsToBuild);
@@ -82,9 +76,6 @@ public class LevelBuilder : MonoBehaviour
                 enemy.gameObject.SetActive(false);
             }
         }
-        
-        
-        
     }
 
     private void OnDestroy()
@@ -128,11 +119,8 @@ public class LevelBuilder : MonoBehaviour
                         newEnemy.gameObject.SetActive(true);
                 _enemiesPool.Add(newEnemy);
             }
-            
         }
-
         _levelPool.Add(newLevelPart);
-
     }
 
     void MoveEnemyInPool(ref List<GameObject> list)
@@ -183,6 +171,4 @@ public class LevelBuilder : MonoBehaviour
         player.transform.position = Const.PlayerStartPosition;
         this._player = player;
     }
-
-
 }

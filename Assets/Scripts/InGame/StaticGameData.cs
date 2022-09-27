@@ -2,23 +2,20 @@ using UnityEngine;
 
 public class StaticGameData : MonoBehaviour
 {
+    private static StaticGameData _instance;
+    
     public static bool availableAD;
     public static float currentSpeed;
     
-
-    private static StaticGameData instance;
     public static StaticGameData Instance
     {
         get
         {
-            if (instance != null)
+            if (_instance != null)
             {
-                instance = new StaticGameData();
+                _instance = new StaticGameData();
             }
-
-            return instance;
+            return _instance;
         }
     }
-
-    
 }

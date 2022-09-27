@@ -10,7 +10,6 @@ public class ScoreText : MonoBehaviour
 {
     private Text _scoreText;
 
-
     private void Awake()
     {
         _scoreText = GetComponent<Text>();

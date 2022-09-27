@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class PlayerData 
 {
-    public static float bestScore;
-    public static bool AdAwailable = true;
     private const string BEST_SCORE = "BESTSCORE";
     private static PlayerData _instance;
+    
+    public static float bestScore;
+    public static bool AdAwailable = true;
     public static PlayerData Instance
     {
         get

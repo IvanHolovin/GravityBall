@@ -3,8 +3,9 @@ using UnityEngine;
 
 public class Gravity : MonoBehaviour
 {
-    public static event Action GravityStateChange;
     private static bool _gravityState = true;
+    
+    public static event Action GravityStateChange;
     public static bool GravityState
     {
         get { return _gravityState; }

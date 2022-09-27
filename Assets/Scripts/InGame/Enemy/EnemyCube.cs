@@ -4,6 +4,7 @@ using UnityEngine;
 public class EnemyCube : MonoBehaviour
 {
     [SerializeField] private KillType _killType;
+    
     private float _previosPositionX;
     void OnEnable()
     {

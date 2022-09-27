@@ -2,8 +2,7 @@ using UnityEngine;
 
 public class WallFollowingEnemy : MonoBehaviour
 {
-    [SerializeField] 
-    private KillType _killType;
+    [SerializeField] private KillType _killType;
 
     private void Awake()
     {

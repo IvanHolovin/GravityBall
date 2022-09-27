@@ -6,11 +6,8 @@ using UnityEngine.UI;
 
 public class ScoreManager : MonoBehaviour
 {
-    [SerializeField] 
-    private float _scoreSpeed;
-    
-    [SerializeField] 
-    private Text _scoreText;
+    [SerializeField] private float _scoreSpeed;
+    [SerializeField] private Text _scoreText;
     
     private float _currentScore;
     private bool _checker = true;
@@ -21,8 +18,7 @@ public class ScoreManager : MonoBehaviour
     {
         GameStateDispatcher.Instance.AddListener(CheckOnPlay);
     }
-
-    // Update is called once per frame
+    
     void Update()
     {
         if(_checker)
@@ -75,5 +71,4 @@ public class ScoreManager : MonoBehaviour
             _checker = false;
         }
     }
-    
 }

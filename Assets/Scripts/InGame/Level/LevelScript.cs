@@ -3,13 +3,12 @@ using UnityEngine;
 
 public class LevelScript : MonoBehaviour
 {
-    public Transform startPoint;
-    public Transform endPoint;
-    
     private ChangeColorScript _color;
     private List<MeshRenderer> _childrenMesh = new List<MeshRenderer>();
     
-
+    public Transform startPoint;
+    public Transform endPoint;
+    
     private void Awake()
     {
         _color = GetComponent<ChangeColorScript>();
@@ -48,5 +47,4 @@ public class LevelScript : MonoBehaviour
             }
         }
     }
-
 }

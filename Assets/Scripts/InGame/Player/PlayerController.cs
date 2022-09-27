@@ -11,7 +11,6 @@ public class PlayerController : MonoBehaviour
     private float _currentSpeed = Const.SPEED;
     private bool _checkPlayState = true;
     
-
     private void Start()
     {
         ScoreManager.ScoreReached += AddSpeed;
@@ -27,18 +26,12 @@ public class PlayerController : MonoBehaviour
         ChangeColor();
     }
 
-    private void OnEnable()
-    {
-        
-    }
-
     private void OnDestroy()
     {
         ScoreManager.ScoreReached -= AddSpeed;
         Gravity.GravityStateChange -= ChangeColor;
         GameStateDispatcher.Instance.RemoveListener(CheckOnRestart);
         GameStateDispatcher.Instance.RemoveListener(CheckOnPlay);
-
     }
 
     
@@ -86,8 +79,8 @@ public class PlayerController : MonoBehaviour
         {
             _checkPlayState = false;
         }
-        
     }
+    
     private void CheckOnRestart(GameState gameState)
     {
         if (gameState == GameState.Restart)

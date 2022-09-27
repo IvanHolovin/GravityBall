@@ -6,14 +6,9 @@ using UnityEngine.UI;
 
 public class GameOverPopUpController : MonoBehaviour
 {
-    [SerializeField] 
-    private Button _watchAdButton;
-    
-    [SerializeField] 
-    private Button _menuButton;
-    
-    [SerializeField] 
-    private Button _restartButton;
+    [SerializeField] private Button _watchAdButton;
+    [SerializeField] private Button _menuButton;
+    [SerializeField] private Button _restartButton;
     
     private void Awake()
     {
